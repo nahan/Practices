@@ -14,5 +14,32 @@ package walmart;
 //    Follow up: what if you need to information like producer, director, screenplay writer, etc., how would you modify your schema?
 
 public class FormString {
-
+    public static boolean formString(String a, String b) {
+        int[] counter = new int[256];
+        for (int i = 0; i < a.length(); i++) {
+            counter[a.charAt(i)]++;
+        }
+        for (int i = 0; i < b.length(); i++) {
+            counter[b.charAt(i)]--;
+        }
+        for (int i = 0; i < b.length(); i++) {
+            if (counter[b.charAt(i)] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static void main(String[] args) {
+        String a1 = "abcd";
+        String b1 = "cabd";
+        String a2 = "abcdef";
+        String b2 = "cabd";
+        String a3 = "addb";
+        String b3 = "cd";
+        
+        System.out.println(formString(a1, b1));
+        System.out.println(formString(a2, b2));
+        System.out.println(formString(a3, b3));
+    }
 }

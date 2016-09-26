@@ -1,41 +1,47 @@
 package godaddy;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class StringSubSet {
     
     public String[] subset(String s) {
-        Set<String> set = new HashSet<>();
+        List<String> list = new ArrayList<>();
         StringBuilder builder = new StringBuilder();
         boolean[] visited = new boolean[s.length()];
-        dfs(set, builder, s, visited, 0);
-        String[] result = new String[set.size()];
-        result = set.toArray(result);
+        char[] array = s.toCharArray();
+        Arrays.sort(array);
+        dfs(list, builder, array, visited);
+        String[] result = new String[list.size()];
+        result = list.toArray(result);
         Arrays.sort(result);
         return result;
     }
     
-    private void dfs(Set<String> set, StringBuilder builder, String s, boolean[] visited, int index) {
-        if (builder.length() != 0 && !set.contains(builder)) {
-            set.add(builder.toString());
+    private void dfs(List<String> list, StringBuilder builder, char[] array, boolean[] visited) {
+        if (builder.length() != 0) {
+            list.add(builder.toString());
         }
-        for (int i = 0; i < s.length(); i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                builder.append(s.charAt(i));
-                dfs(set, builder, s, visited, i);
-                visited[i] = false;
-                builder.deleteCharAt(builder.length() - 1);
+        for (int i = 0; i < array.length; i++) {
+            if (visited[i]) {
+                continue;
             }
+            if (i > 0 && array[i - 1] == array[i] && !visited[i - 1]) {
+                continue;
+            }
+            visited[i] = true;
+            builder.append(array[i]);
+            dfs(list, builder, array, visited);
+            builder.deleteCharAt(builder.length() - 1);
+            visited[i] = false;
         }
     }
     
     public static void main(String[] args) {
         StringSubSet solution = new StringSubSet();
+        System.out.println(Arrays.toString(solution.subset("abc")));
         System.out.println(Arrays.toString(solution.subset("bab")));
         System.out.println(Arrays.toString(solution.subset("babcd")));
+        System.out.println(Arrays.toString(solution.subset("aabbcc")));
     }
 
 }

@@ -1,5 +1,5 @@
 package walmart;
-
+import java.util.*;
 //    http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=189728&highlight=walmart
 
 //    上周刚刚面完Walmartlabs intern。一天面了两个组，4轮：
@@ -9,6 +9,70 @@ package walmart;
 //    
 //    两天后来了两个offer，选择了第一组。
 
-public class ValidBST {
+// https://leetcode.com/problems/validate-binary-search-tree/
 
+public class ValidBST {
+    
+    // recursion
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        if (root.left != null) {
+            TreeNode maxOnLeft = max(root.left);
+            if (maxOnLeft.val >= root.val) {
+                return false;
+            }
+        }
+        if (root.right != null) {
+            TreeNode minOnRight = min(root.right);
+            if (minOnRight.val <= root.val) {
+                return false;
+            }
+        }
+        return isValidBST(root.left) && isValidBST(root.right);
+    }
+    public TreeNode max(TreeNode node) {
+        if (node.right == null) {
+            return node;
+        }
+        return max(node.right);
+    }
+    public TreeNode min(TreeNode node) {
+        if (node.left == null) {
+            return node;
+        }
+        return min(node.left);
+    }
+    
+    // list
+    public boolean isValidBST2(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        inorder(root, list);
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i - 1) >= list.get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private void inorder(TreeNode node, List<Integer> list) {
+        if (node == null) {
+            return;
+        }
+        inorder(node.left, list);
+        list.add(node.val);
+        inorder(node.right, list);
+    }
+    
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
 }

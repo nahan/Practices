@@ -15,5 +15,30 @@ package walmart;
 //    面跪了就move on吧。。。祝大家offer满满！
 
 public class ValidPalindrome {
-
+    public boolean isPalindrome(String s) {
+        int i = 0;
+        int j = s.length() - 1;
+        s = s.toLowerCase();
+        while (i < j) {
+            char left = s.charAt(i);
+            char right = s.charAt(j);
+            if (!isAlphNum(left)) {
+                i++;
+                continue;
+            }
+            if (!isAlphNum(right)) {
+                j--;
+                continue;
+            }
+            if (left != right) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+    public boolean isAlphNum(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+    }
 }

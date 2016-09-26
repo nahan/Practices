@@ -1,5 +1,5 @@
 package walmart;
-
+import java.util.*;
 //    http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=156069&highlight=walmart
 
 //    2015(10-12月) 码农类 硕士 全职@Walmart Lab - 内推 - Onsite |Failfresh grad应届毕业生
@@ -30,7 +30,71 @@ package walmart;
 //    
 //    总之, 楼主觉得这个题目各种扯, 想了好几天都没想出来合理的解法, 有大神给一个详细的解法吗?
 
+// https://leetcode.com/problems/3sum-smaller/
 
 public class Sum3 {
+    
+    public static List<List<Integer>> threeSumSmaller(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            List<List<Integer>> list = twoSumSmaller(nums, i + 1, target - nums[i]);
+            for (List<Integer> item: list) {
+                result.add(Arrays.asList(nums[i], item.get(0), item.get(1)));
+            }
+        }
+        return result;
+    }
 
+    public static List<List<Integer>> twoSumSmaller(int[] nums, int startIndex, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        int left = startIndex;
+        int right = nums.length - 1;
+        while (left < right) {
+            if (nums[left] + nums[right] < target) {
+                for (int i = right; i > left; i--) {
+                    list.add(Arrays.asList(nums[left], nums[i]));
+                }
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return list;
+    }
+    
+    public static int threeSumSmaller1(int[] nums, int target) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int i = 0; i < nums.length - 2; i++) {
+            sum += twoSumSmaller1(nums, i + 1, target - nums[i]);
+        }
+        return sum;
+    }
+
+    private static int twoSumSmaller1(int[] nums, int startIndex, int target) {
+        int sum = 0;
+        int left = startIndex;
+        int right = nums.length - 1;
+        while (left < right) {
+            if (nums[left] + nums[right] < target) {
+                sum += right - left;
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return sum;
+    }
+    
+    public static void main(String[] args) {
+        int[] a1 = {-2, 3, 0, 4};
+        int[] a2 = {-3, 2, 0, -2, 1, 5};
+        
+        System.out.println(threeSumSmaller(a1, 6));
+        System.out.println(threeSumSmaller(a2, 6));
+        
+        System.out.println(threeSumSmaller1(a1, 6));
+        System.out.println(threeSumSmaller1(a2, 6));
+    }
 }

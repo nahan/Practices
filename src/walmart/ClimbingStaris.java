@@ -21,5 +21,15 @@ package walmart;
 
 
 public class ClimbingStaris {
-
+    public int climbStairs(int n) {
+        if (n < 2) {
+            return 1;
+        }
+        int[] steps = new int[n + 1];
+        steps[0] = steps[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            steps[i] = steps[i - 2] + steps[i - 1];
+        }
+        return steps[n];
+    }
 }

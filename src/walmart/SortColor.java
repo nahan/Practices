@@ -19,7 +19,29 @@ package walmart;
 //    5 BST node with parent and child reference, find next bigger one;
 //    other one is easy, do not remember
 
+// https://leetcode.com/problems/sort-colors/
 
 public class SortColor {
 
+    public void sortColors(int[] nums) {
+        int index = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                swap(nums, index++, i);
+            }
+        }
+        index = nums.length - 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] == 2) {
+                swap(nums, index--, i);
+            }
+        }
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
 }
