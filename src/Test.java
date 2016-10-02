@@ -13,5 +13,6 @@ public class Test {
         System.out.println(s.indexOf(t));
         String test = "test|test2";
         System.out.println(Arrays.toString(test.split("\\|")));
+        System.out.println(Math.sqrt(2));
     }
 }
