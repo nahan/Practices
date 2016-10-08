@@ -12,6 +12,7 @@ import java.util.List;
 // 261
 
 public class GraphValidTree {
+    @SuppressWarnings("unchecked")
     public boolean validTree(int n, int[][] edges) {
         if (n < 2) {
             return true;
