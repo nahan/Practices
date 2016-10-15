@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class CourseScheduleII {
 
-    // 207
+    // 207. CourseSchedule I
     // 1. DFS solution - O(V + E)
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         List<List<Integer>> graph = new ArrayList<>();
@@ -55,7 +55,7 @@ public class CourseScheduleII {
         return true;
     }
 
-    // 207
+    // 207. CourseSchedule I
     // 2. DFS solution, use HashSet to reduce unnecessary computing
     public boolean canFinishII(int numCourses, int[][] prerequisites) {
         List<Set<Integer>> graph = new ArrayList<>();
