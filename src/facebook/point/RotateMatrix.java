@@ -14,4 +14,61 @@ package facebook.point;
 
 public class RotateMatrix {
 
+    // a naive solution
+    // 1. up side down swap
+    // 2. diagonal swap
+    public void rotate(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        int up = 0;
+        int down = matrix.length - 1;
+        while (up < down) {
+            for (int k = 0; k < matrix[0].length; k++) {
+                swap(matrix, up, down, k);
+            }
+            up++;
+            down--;
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = i + 1; j < matrix[0].length; j++) {
+                swap(matrix, i, j);
+            }
+        }
+    }
+    private void swap(int[][] matrix, int i, int j, int k) {
+        int temp = matrix[i][k];
+        matrix[i][k] = matrix[j][k];
+        matrix[j][k] = temp;
+    }
+    private void swap(int[][] matrix, int i, int j) {
+        int temp = matrix[i][j];
+        matrix[i][j] = matrix[j][i];
+        matrix[j][i] = temp;
+    }
+
+    // a tricky solution
+    // swap four elements layer by layer
+    public void rotateII(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        for (int layer = 0; layer < matrix.length / 2; layer++) {
+            int first = layer;
+            int last = matrix.length - 1 - layer;
+            for (int i = first; i < last; i++) {
+                int offset = i - first;
+                // save top
+                int top = matrix[first][i];
+                // left -> top
+                matrix[first][i] = matrix[last - offset][first];
+                // bottom -> left
+                matrix[last - offset][first] = matrix[last][last - offset];
+                // right -> bottom
+                matrix[last][last - offset] = matrix[i][last];
+                // top -> right
+                matrix[i][last] = top;
+            }
+        }
+    }
 }
